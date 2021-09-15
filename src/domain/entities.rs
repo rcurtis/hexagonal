@@ -1,7 +1,7 @@
 use std::convert::TryFrom;
 use std::fmt::Error;
 
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, Ord, PartialOrd, Eq)]
 pub struct PokemonNumber(u16);
 
 impl TryFrom<u16> for PokemonNumber {
@@ -25,6 +25,8 @@ impl From<PokemonNumber> for u16 {
 #[cfg(test)]
 impl PokemonNumber {
     pub fn pikachu() -> Self { Self(25) }
+    pub fn charmander() -> Self { Self(4) }
+    pub fn bad() -> Self { Self(0) }
 }
 
 
@@ -47,6 +49,12 @@ impl From<PokemonName> for String {
     fn from(name: PokemonName) -> Self {
         name.0
     }
+}
+
+#[cfg(test)]
+impl PokemonName {
+    pub fn pikachu() -> Self { Self("Pikachu".to_string()) }
+    pub fn charmander() -> Self { Self("Charmander".to_string()) }
 }
 
 #[derive(Clone)]
@@ -77,6 +85,16 @@ impl From<PokemonTypes> for Vec<String> {
         it.into_iter()
             .map(|poke_type| { String::from(poke_type) })
             .collect()
+    }
+}
+
+#[cfg(test)]
+impl PokemonTypes {
+    pub fn pikachu() -> Self {
+        Self(vec![PokemonType::from(PokemonType::Electric)])
+    }
+    pub fn charmander() -> Self {
+        Self(vec![PokemonType::from(PokemonType::Fire)])
     }
 }
 
